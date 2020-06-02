@@ -11,12 +11,7 @@ Vue.use(VueRouter)
     component: Home
   },
   {
-    path: '/about',
-    name: 'About',
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  },
-  {
-    path: '/anime',
+    path: '/anime/:anio/:season',
     name: 'Anime',
     component: () => import(/* webpackChunkName: "about" */ '../views/Anime.vue')
   }

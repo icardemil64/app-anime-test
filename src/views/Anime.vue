@@ -1,36 +1,34 @@
 <template>
     <div class="container">
-        <form class="form-inline" @submit.prevent="getAnime(id)">
-            <input type="number" class="form-control my-2" placeholder="Ingresa ID" v-model="id">
-            <button class="btn btn-warning my-2 mx-2" type="submit">Buscar serie</button>
-        </form>
-        <h1>{{anime.title}}</h1>
-        <img :src="anime.image_url">
-        <h5>{{anime.title_english}}</h5>
-        <h5>{{anime.title_japanese}}</h5>
-        <iframe id="player" type="text/html" width="640" height="360"
-                :src="anime.trailer_url"
-                frameborder="0">
-        </iframe>
+        <div class="row">
+            <div v-for="(item,index) in animes.anime" :key="index" class="col-6">
+                <AnimeCard :anime = "item"/>
+            </div>
+        </div>
     </div>
 </template>
 <script>
+import AnimeCard from '@/components/AnimeCard'
 export default {
+    components:{
+        AnimeCard,
+    },
     data() {
         return {
-            anime : {},
-            id: 1
+            animes : [],
+            season: this.$route.params.season,
+            anio: this.$route.params.anio,
         }
     },
     created() {
-        this.getAnime(this.id);
+        this.getAnime(this.season);
     },
     methods: {
-        getAnime(id){
-            this.axios.get(`/anime/${this.id}`)
+        getAnime(season){
+            this.axios.get(`/season/${this.anio}/${this.season}`)
              .then(res => {
-                 console.log(res.data)
-                 this.anime = res.data;
+                 this.animes = res.data;
+                 console.log(this.animes.anime);
              })
               .catch(e => {
                   console.log(e.response)
